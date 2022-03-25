@@ -82,7 +82,7 @@ def callback_move(data):
 if __name__ == '__main__':
     GPIO.cleanup()
     print('Hola1')
-    while True:
+    while not rospy.is_shutdown():
         print('Hola2')
         rospy.init_node('robot_listener', anonymous=True)
         rospy.Subscriber('/robot_cmdVel', Twist, callback_move)
