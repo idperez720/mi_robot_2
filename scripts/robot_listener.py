@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from ast import While
 import rospy
 from geometry_msgs.msg import Twist
 import RPi.GPIO as GPIO
@@ -61,8 +62,9 @@ def Reversa():
 
 
 def callback_move(data):
+    print('Hola3')    
     velocidad = int(data.linear.x)
-    rospy.loginfo(velocidad)
+    rospy.loginfo(data)
     # if velocidad > 0:
     #     Adelante()
     #     pwm_a.ChangeDutyCycle(velocidad)
@@ -73,19 +75,15 @@ def callback_move(data):
     #     pwm_a.ChangeDutyCycle(velocidad)
     #     pwm_b.ChangeDutyCycle(velocidad)
     #print(velocidad)
-    
 
-def listener():
-    rospy.init_node('robot_listener', anonymous=True)
-    rospy.Subscriber('/robot_cmdVel', Twist, callback_move)
-    rospy.spin()
 
 
 
 if __name__ == '__main__':
     GPIO.cleanup()
-    try:
-        listener()
-    except rospy.ROSInterruptException:
-        GPIO.cleanup()
-        pass
+    print('Hola1')
+    while True:
+        print('Hola2')
+        rospy.init_node('robot_listener', anonymous=True)
+        rospy.Subscriber('/robot_cmdVel', Twist, callback_move)
+        rospy.Rate(60)
