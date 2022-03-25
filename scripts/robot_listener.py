@@ -82,6 +82,7 @@ def listener():
 
 
 if __name__ == '__main__':
+    GPIO.cleanup()
     try:
         listener()
     except rospy.ROSInterruptException:
