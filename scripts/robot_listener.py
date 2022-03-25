@@ -62,16 +62,17 @@ def Reversa():
 
 def callback_move(data):
     velocidad = int(data.linear.x)
-    if velocidad > 0:
-        Adelante()
-        pwm_a.ChangeDutyCycle(velocidad)
-        pwm_b.ChangeDutyCycle(velocidad)
-    if velocidad < 0:
-        velocidad = -1*velocidad
-        Reversa()
-        pwm_a.ChangeDutyCycle(velocidad)
-        pwm_b.ChangeDutyCycle(velocidad)
-    print(velocidad)
+    rospy.loginfo(velocidad)
+    # if velocidad > 0:
+    #     Adelante()
+    #     pwm_a.ChangeDutyCycle(velocidad)
+    #     pwm_b.ChangeDutyCycle(velocidad)
+    # if velocidad < 0:
+    #     velocidad = -1*velocidad
+    #     Reversa()
+    #     pwm_a.ChangeDutyCycle(velocidad)
+    #     pwm_b.ChangeDutyCycle(velocidad)
+    #print(velocidad)
     
 
 def listener():
