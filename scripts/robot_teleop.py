@@ -67,11 +67,6 @@ listener = kb.Listener(
             on_press=on_press,
             on_release=on_release)
 
-
-
-
-
-
 def move():
     cmd_vel_pub = rospy.Publisher('/robot_cmdVel', Twist, queue_size=10)
     rospy.Rate(10)
