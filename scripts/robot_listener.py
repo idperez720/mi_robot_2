@@ -53,11 +53,14 @@ def callback_move(data):
     if velocidad < 0:
         velocidad = -1*velocidad
         Reversa() 
+        pwm_a.ChangeDutyCycle(velocidad)
+        pwm_b.ChangeDutyCycle(velocidad)
+
     else:
         Adelante()
+        pwm_a.ChangeDutyCycle(velocidad)
+        pwm_b.ChangeDutyCycle(velocidad)
 
-    pwm_a.ChangeDutyCycle(velocidad)
-    pwm_b.ChangeDutyCycle(velocidad)
 
 def listener():
     rospy.init_node('robot_listener', anonymous=True)

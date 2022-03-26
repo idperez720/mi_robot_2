@@ -74,7 +74,7 @@ listener = kb.Listener(
 
 def move():
     cmd_vel_pub = rospy.Publisher('/robot_cmdVel', Twist, queue_size=10)
-    rospy.Rate(100)
+    rospy.Rate(10)
 
     while not rospy.is_shutdown():
         cmd_vel_pub.publish(move_msg)
