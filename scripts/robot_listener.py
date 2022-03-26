@@ -30,60 +30,43 @@ pwm_b = GPIO.PWM(enb,500)
 #inicializan los PWM con un duty Cicly de cero
 pwm_a.start(0)
 pwm_b.start(0)
-# funciones de sentido de giro de los motores
-# def  Giro_Favor_Reloj_MotorA():
-# 	GPIO.output(in2,False)
-# 	GPIO.output(in1,True)
 
-# def Giro_Contra_Reloj_MotorA():
-# 	GPIO.output(in2,True)
-# 	GPIO.output(in1,False)
-
-# def  Giro_Favor_Reloj_MotorB():
-# 	GPIO.output(in3,False)
-# 	GPIO.output(in4,True)
-
-# def Giro_Contra_Reloj_MotorB():
-# 	GPIO.output(in3,True)
-# 	GPIO.output(in4,False)
-
+#funciones de los motores
 def Adelante():
+    GPIO.output(in2,True)
+    GPIO.output(in1,False)
+    GPIO.output(in3,True)
+    GPIO.output(in4,False)
+
+def Reversa():
     GPIO.output(in2,False)
     GPIO.output(in1,True)
     GPIO.output(in3,False)
     GPIO.output(in4,True)
-def Reversa():
-	GPIO.output(in2,True)
-	GPIO.output(in1,False)
-	GPIO.output(in3,True)
-	GPIO.output(in4,False)
 
 
 
 
-def callback_move(data):
-    print('Hola3')    
+def callback_move(data): 
     velocidad = int(data.linear.x)
     rospy.loginfo(data)
-    # if velocidad > 0:
-    #     Adelante()
-    #     pwm_a.ChangeDutyCycle(velocidad)
-    #     pwm_b.ChangeDutyCycle(velocidad)
-    # if velocidad < 0:
-    #     velocidad = -1*velocidad
-    #     Reversa()
-    #     pwm_a.ChangeDutyCycle(velocidad)
-    #     pwm_b.ChangeDutyCycle(velocidad)
-    #print(velocidad)
+    if velocidad < 0:
+        velocidad = -1*velocidad
+        Reversa() 
+    else:
+        Adelante()
 
+    pwm_a.ChangeDutyCycle(velocidad)
+    pwm_b.ChangeDutyCycle(velocidad)
 
-
+def listener():
+    rospy.init_node('robot_listener', anonymous=True)
+    rospy.Subscriber('/robot_cmdVel', Twist, callback_move)
+    rospy.spin()
+    GPIO.cleanup()
 
 if __name__ == '__main__':
     GPIO.cleanup()
-    print('Hola1')
     while not rospy.is_shutdown():
-        print('Hola2')
-        rospy.init_node('robot_listener', anonymous=True)
-        rospy.Subscriber('/robot_cmdVel', Twist, callback_move)
+        
         rospy.Rate(60)
