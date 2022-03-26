@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-from ast import While
 import rospy
 from geometry_msgs.msg import Twist
 import RPi.GPIO as GPIO
@@ -49,8 +48,8 @@ def Reversa():
 
 def callback_move(data): 
     velocidad = int(data.linear.x)
-    rospy.loginfo(data)
-    if velocidad < 0:
+    rospy.loginfo(data.linear.x)
+    if velocidad < 0: 
         velocidad = -1*velocidad
         Reversa() 
         pwm_a.ChangeDutyCycle(velocidad)
