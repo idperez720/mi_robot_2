@@ -66,7 +66,4 @@ def listener():
     GPIO.cleanup()
 
 if __name__ == '__main__':
-    GPIO.cleanup()
-    while not rospy.is_shutdown():
-        
-        rospy.Rate(60)
+    listener()
