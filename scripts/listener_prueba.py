@@ -63,7 +63,7 @@ def Giro_Contra_Motor_B():
 
 
 def callback_move(data): 
-    velocidad = data.data
+    velocidad = data.linear.x
     print(velocidad)
     # if velocidad < 0:
     #     velocidad = -1*velocidad
