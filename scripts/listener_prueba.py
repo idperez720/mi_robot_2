@@ -66,12 +66,20 @@ def callback_move(data):
     velocidadLineal = data.linear.x
     velocidadAngular = data.angular.z
     print("["+ str(velocidadLineal) + "," + str(velocidadAngular) + "]")
-    # if velocidad < 0:
-    #     velocidad = -1*velocidad
-    #     Giro_Favor_Motor_A()
-    #     Giro_Contra_Motor_B() 
-    #     pwm_a.ChangeDutyCycle(velocidad)
-    #     pwm_b.ChangeDutyCycle(velocidad)
+    if velocidadLineal < 0:
+        velocidad = int(-1*velocidadLineal)
+        Giro_Favor_Motor_A()
+        Giro_Favor_Motor_B() 
+        pwm_a.ChangeDutyCycle(velocidad)
+        pwm_b.ChangeDutyCycle(velocidad)
+    
+    elif velocidadLineal > 0:
+        velocidad = int(velocidadLineal)
+        Giro_Contra_Motor_B()
+        Giro_Contra_Motor_A()
+        pwm_a.ChangeDutyCycle(velocidad)
+        pwm_b.ChangeDutyCycle(velocidad)
+
 
     # else:
     #     Giro_Favor_Motor_B()
