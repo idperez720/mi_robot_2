@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import rospy
 from std_msgs.msg import String
+from geometry_msgs.msg import Twist
 import RPi.GPIO as GPIO
 
 #Define nombre de las entradas del puente H
@@ -62,24 +63,24 @@ def Giro_Contra_Motor_B():
 
 
 def callback_move(data): 
-    velocidad = int(data.data)
+    velocidad = data.data
     print(velocidad)
-    if velocidad < 0:
-        velocidad = -1*velocidad
-        Giro_Favor_Motor_A()
-        Giro_Contra_Motor_B() 
-        pwm_a.ChangeDutyCycle(velocidad)
-        pwm_b.ChangeDutyCycle(velocidad)
+    # if velocidad < 0:
+    #     velocidad = -1*velocidad
+    #     Giro_Favor_Motor_A()
+    #     Giro_Contra_Motor_B() 
+    #     pwm_a.ChangeDutyCycle(velocidad)
+    #     pwm_b.ChangeDutyCycle(velocidad)
 
-    else:
-        Giro_Favor_Motor_B()
-        Giro_Contra_Motor_A()
-        pwm_a.ChangeDutyCycle(velocidad)
-        pwm_b.ChangeDutyCycle(velocidad)
+    # else:
+    #     Giro_Favor_Motor_B()
+    #     Giro_Contra_Motor_A()
+    #     pwm_a.ChangeDutyCycle(velocidad)
+    #     pwm_b.ChangeDutyCycle(velocidad)
 
 def listener():
     rospy.init_node('robot_listener', anonymous=True)
-    rospy.Subscriber('/robot_cmdVel', String, callback_move)
+    rospy.Subscriber('/robot_cmdVel', Twist, callback_move)
     rospy.spin()
     GPIO.cleanup()
 
