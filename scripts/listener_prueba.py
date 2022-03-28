@@ -42,23 +42,23 @@ def Reversa():
     GPIO.output(in4,True)
 
 def Giro_Favor_Motor_A():
-    GPIO.output(in1,False)
-    GPIO.output(in2,True)
-
-
-def Giro_Contra_Motor_A():
     GPIO.output(in1,True)
     GPIO.output(in2,False)
 
 
+def Giro_Contra_Motor_A():
+    GPIO.output(in1,False)
+    GPIO.output(in2,True)
+
+
 def Giro_Favor_Motor_B():
-    GPIO.output(in3,True)
-    GPIO.output(in4,False)
+    GPIO.output(in3,False)
+    GPIO.output(in4,True)
 
 
 def Giro_Contra_Motor_B():
-    GPIO.output(in3,False)
-    GPIO.output(in4,True)
+    GPIO.output(in3,True)
+    GPIO.output(in4,False)
 
 
 def callback_move(data): 
