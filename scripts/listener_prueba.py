@@ -72,8 +72,8 @@ def callback_move(data):
         pwm_b.ChangeDutyCycle(velocidad)
 
     else:
-        Giro_Favor_Motor_A()
-        Giro_Contra_Motor_B()
+        Giro_Favor_Motor_B()
+        Giro_Contra_Motor_A()
         pwm_a.ChangeDutyCycle(velocidad)
         pwm_b.ChangeDutyCycle(velocidad)
 
