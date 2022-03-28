@@ -17,7 +17,7 @@ move_msg.angular.z = 0
 directory = os.path.dirname(__file__)
 
 def move(text):
-    path = os.path.join(directory, text)
+    path = os.path.join(directory, "results", "recorridos", text)
     print(path)
     with open(path, 'r') as f:
         lines = f.readlines()
