@@ -84,7 +84,7 @@ def talker():
     con=input('Desea guardar el recorrido? y/n \n')
     if(con=="y"):
         name = input('Ingrese nombre del archivo \n')
-        path = os.path.join(directory, "Recorridos", name)
+        path = os.path.join(directory, "results", "recorridos", name)
         f = open(path + ".txt","a")
         #recorridos.append(name1 + '.txt')
         print('Presione h para guardar el recorrido ')

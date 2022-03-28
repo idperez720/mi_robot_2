@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 import rospy
-import numpy as np
 from geometry_msgs.msg import Twist
 import os
+from mi_robot_2 import player
 move_msg = Twist()
 velLin = 10
 velAng = 10
@@ -49,7 +49,7 @@ def move(text):
 
 if __name__ == '__main__':
 
-    rospy.init_node('turtle_bot_player', anonymous=True)
+    rospy.init_node('robot_player', anonymous=True)
     rate = rospy.Rate(25)
     cmd_vel_pub = rospy.Publisher('/robot_cmdVel', Twist, queue_size=10)
     file_list = os.listdir(directory)
