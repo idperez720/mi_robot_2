@@ -67,12 +67,12 @@ def callback_move(data):
     if velocidad < 0:
         velocidad = -1*velocidad
         Giro_Favor_Motor_A()
-        Giro_Favor_Motor_B() 
+        Giro_Contra_Motor_B() 
         pwm_a.ChangeDutyCycle(velocidad)
         pwm_b.ChangeDutyCycle(velocidad)
 
     else:
-        Giro_Contra_Motor_A()
+        Giro_Favor_Motor_A()
         Giro_Contra_Motor_B()
         pwm_a.ChangeDutyCycle(velocidad)
         pwm_b.ChangeDutyCycle(velocidad)
