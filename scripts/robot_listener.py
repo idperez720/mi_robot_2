@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import rospy
-from std_msgs.msg import String
+from geometry_msgs.msg import Twist
 import RPi.GPIO as GPIO
 
 #Define nombre de las entradas del puente H
@@ -41,26 +41,63 @@ def Reversa():
     GPIO.output(in3,False)
     GPIO.output(in4,True)
 
+def Giro_Favor_Motor_A():
+    GPIO.output(in1,True)
+    GPIO.output(in2,False)
 
+
+def Giro_Contra_Motor_A():
+    GPIO.output(in1,False)
+    GPIO.output(in2,True)
+
+
+def Giro_Favor_Motor_B():
+    GPIO.output(in3,False)
+    GPIO.output(in4,True)
+
+
+def Giro_Contra_Motor_B():
+    GPIO.output(in3,True)
+    GPIO.output(in4,False)
 
 
 def callback_move(data): 
-    velocidad = int(data.data)
-    print(velocidad)
-    if velocidad < 0:
-        velocidad = -1*velocidad
-        Reversa() 
+    velocidadLineal = data.linear.x
+    velocidadAngular = data.angular.z
+    if velocidadLineal < 0:
+        velocidad = int(-1*velocidadLineal)
+        Giro_Favor_Motor_A()
+        Giro_Favor_Motor_B() 
+        pwm_a.ChangeDutyCycle(velocidad)
+        pwm_b.ChangeDutyCycle(velocidad)
+    
+    elif velocidadLineal > 0:
+        velocidad = int(velocidadLineal)
+        Giro_Contra_Motor_B()
+        Giro_Contra_Motor_A()
+        pwm_a.ChangeDutyCycle(velocidad)
+        pwm_b.ChangeDutyCycle(velocidad)
+    
+    elif velocidadAngular < 0:
+        velocidad = int(-1*velocidadAngular)
+        Giro_Favor_Motor_B()
+        Giro_Contra_Motor_A()
         pwm_a.ChangeDutyCycle(velocidad)
         pwm_b.ChangeDutyCycle(velocidad)
 
-    else:
-        Adelante()
+    elif velocidadAngular > 0:
+        velocidad = int(velocidadAngular)
+        Giro_Contra_Motor_B()
+        Giro_Favor_Motor_A()
         pwm_a.ChangeDutyCycle(velocidad)
         pwm_b.ChangeDutyCycle(velocidad)
+    else:
+        pwm_a.ChangeDutyCycle(0)
+        pwm_b.ChangeDutyCycle(0)
 
 def listener():
     rospy.init_node('robot_listener', anonymous=True)
-    rospy.Subscriber('/robot_cmdVel', String, callback_move)
+    rospy.Subscriber('/robot_cmdVel', Twist, callback_move)
     rospy.spin()
     GPIO.cleanup()
 
