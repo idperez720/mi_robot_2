@@ -65,7 +65,6 @@ def Giro_Contra_Motor_B():
 def callback_move(data): 
     velocidadLineal = data.linear.x
     velocidadAngular = data.angular.z
-    print("["+ str(velocidadLineal) + "," + str(velocidadAngular) + "]")
     if velocidadLineal < 0:
         velocidad = int(-1*velocidadLineal)
         Giro_Favor_Motor_A()
@@ -79,13 +78,23 @@ def callback_move(data):
         Giro_Contra_Motor_A()
         pwm_a.ChangeDutyCycle(velocidad)
         pwm_b.ChangeDutyCycle(velocidad)
+    
+    elif velocidadAngular < 0:
+        velocidad = int(-1*velocidadAngular)
+        Giro_Favor_Motor_B()
+        Giro_Contra_Motor_A()
+        pwm_a.ChangeDutyCycle(velocidad)
+        pwm_b.ChangeDutyCycle(velocidad)
 
-
-    # else:
-    #     Giro_Favor_Motor_B()
-    #     Giro_Contra_Motor_A()
-    #     pwm_a.ChangeDutyCycle(velocidad)
-    #     pwm_b.ChangeDutyCycle(velocidad)
+    elif velocidadAngular > 0:
+        velocidad = int(velocidadAngular)
+        Giro_Contra_Motor_B()
+        Giro_Favor_Motor_A()
+        pwm_a.ChangeDutyCycle(velocidad)
+        pwm_b.ChangeDutyCycle(velocidad)
+    else:
+        pwm_a.ChangeDutyCycle(0)
+        pwm_b.ChangeDutyCycle(0)
 
 def listener():
     rospy.init_node('robot_listener', anonymous=True)
