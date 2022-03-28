@@ -2,7 +2,7 @@
 import rospy
 from geometry_msgs.msg import Twist
 import os
-from mi_robot_2 import player
+#from mi_robot_2 import player
 move_msg = Twist()
 velLin = 10
 velAng = 10
