@@ -52,7 +52,8 @@ if __name__ == '__main__':
     rospy.init_node('robot_player', anonymous=True)
     rate = rospy.Rate(25)
     cmd_vel_pub = rospy.Publisher('/robot_cmdVel', Twist, queue_size=10)
-    file_list = os.listdir(directory)
+    path = os.path.join(directory, "results", "recorridos")
+    file_list = os.listdir(path)
     files = []
     print('Archivos disponibles:')
     for file in file_list:
