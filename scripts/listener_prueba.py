@@ -63,8 +63,9 @@ def Giro_Contra_Motor_B():
 
 
 def callback_move(data): 
-    velocidad = data.linear.x
-    print(velocidad)
+    velocidadLineal = data.linear.x
+    velocidadAngular = data.angular.z
+    print("["+ str(velocidadLineal) + "," + str(velocidadAngular) + "]")
     # if velocidad < 0:
     #     velocidad = -1*velocidad
     #     Giro_Favor_Motor_A()
