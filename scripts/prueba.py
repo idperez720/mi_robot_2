@@ -1,17 +1,11 @@
 #!/usr/bin/env python3
-from glob import glob
 import rospy
 import keyboard
-from std_msgs.msg import String
 from geometry_msgs.msg import Twist
+import os
 
-# global msg
-# global velLin
-# global velAng
-# msg = "0"
-# velLin = 0
-# velAng = 0
 
+## Variables
 global msg
 global velLin
 global velAng
@@ -27,6 +21,10 @@ msg.angular.x = 0
 msg.angular.y = 0
 msg.angular.z = 0
 
+directory = os.path.dirname(__file__)
+
+
+## Funciones
 def key_press(key):
     global msg
     global velLin
@@ -41,6 +39,8 @@ def key_press(key):
             msg.angular.z = velAng
         elif key.name == "d":
             msg.angular.z = -1*velAng
+        move_str = "\n" + str(msg.linear.x) + "," + str(msg.linear.y) + "," + str(msg.linear.z) + "," + str(msg.angular.x) + "," + str(msg.angular.y) + "," + str(msg.angular.z)
+        f.write(move_str)
 
     elif key.event_type == "up":
         if key.name == "w":
@@ -50,13 +50,27 @@ def key_press(key):
         elif key.name == "a":
             msg.angular.z = 0
         elif key.name == "d":
-            msg.angular.z = 0
+            msg.angular.z = 0   
+        move_str = "\n" + str(msg.linear.x) + "," + str(msg.linear.y) + "," + str(msg.linear.z) + "," + str(msg.angular.x) + "," + str(msg.angular.y) + "," + str(msg.angular.z)
+        f.write(move_str)
 
 def talker():
     global velLin
     global velAng
+    global f
     velLin = int(input('Ingrese la velociadad lineal deseada: '))
     velAng = int(input('Ingrese la velociadad angular deseada: '))
+
+    ## Guardar recorido
+    con=input('Desea guardar el recorrido? y/n \n')
+    if(con=="y"):
+        name = input('Ingrese nombre del archivo \n')
+        path = os.path.join(directory, name)
+        f = open(path + ".txt","a")
+        #recorridos.append(name1 + '.txt')
+        print('Presione h para guardar el recorrido ')
+
+
     pub = rospy.Publisher('/robot_cmdVel', Twist, queue_size=10)
     rospy.init_node('talker', anonymous=True)
     rate = rospy.Rate(10) #10Hz
