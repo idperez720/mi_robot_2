@@ -1,6 +1,4 @@
 #!/usr/bin/env python3
-
-from cmath import e
 import rospy
 import numpy as np
 from geometry_msgs.msg import Twist
@@ -53,7 +51,7 @@ if __name__ == '__main__':
 
     rospy.init_node('turtle_bot_player', anonymous=True)
     rate = rospy.Rate(25)
-    cmd_vel_pub = rospy.Publisher('/turtlebot_cmdVel', Twist, queue_size=10)
+    cmd_vel_pub = rospy.Publisher('/robot_cmdVel', Twist, queue_size=10)
     file_list = os.listdir(directory)
     files = []
     print('Archivos disponibles:')
