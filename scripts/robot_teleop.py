@@ -9,6 +9,19 @@ import os
 global msg
 global velLin
 global velAng
+global Vr #Velocidad lineal rueda derecha
+global Vl #Velocidad lineal rueda izquierda
+global l #Distancia entre las ruedas
+global r #Radio de las ruedas
+global VelAngMax
+global VelLinMax
+
+Vr = 0
+Vl = 0
+l = 10 #cm
+r = 2 #cm
+VelAngMax = 16.8 #rad/s
+VelLinMax = r*VelAngMax #cmd/s
 
 msg = Twist()
 velLin = 0
@@ -75,10 +88,9 @@ def key_press(key):
 def talker():
     global velLin
     global velAng
-    global f
-    global name
-    velLin = int(input('Ingrese la velociadad lineal deseada: '))
-    velAng = int(input('Ingrese la velociadad angular deseada: '))
+    velLin = int(input('Ingrese la velociadad lineal deseada: '+"[0-"+str(int(VelLinMax))+"](cm/s):"))
+    velAng = int(input('Ingrese la velociadad angular deseada: '+"[0-"+str(int(VelAngMax))+"](rads/s):"))
+    
 
     ## Guardar recorido
     con=input('Desea guardar el recorrido? y/n \n')
