@@ -93,8 +93,7 @@ def getPos(x,y,theta,Vr,Vl):
     return pos
 
 
-
-def callback_move(data): 
+def callback_move(data):
     velLin = data.linear.x
     velAng = data.angular.z
     PWM_Lin = velLin*100/33 if velLin < 33 else 100
@@ -108,6 +107,7 @@ def callback_move(data):
         pwm_a.ChangeDutyCycle(PWM_Lin)
         pwm_b.ChangeDutyCycle(PWM_Lin)
         pos = getPos(x, y, theta, -velLin, -velLin)
+        x, y, theta = pos
         print(pos)
     elif velLin > 0:
         Giro_Contra_Motor_B()
