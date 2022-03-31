@@ -25,7 +25,7 @@ theta = [0]
 
 Vr = 0
 Vl = 0
-l = 18 #cm
+l = 21 #cm
 r = 3.4 #cm
 
 #Define nombre de las entradas del puente H
