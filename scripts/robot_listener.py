@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
+from matplotlib.pyplot import get
 import rospy
+from std_msgs.msg import Float32
 from geometry_msgs.msg import Twist
 import RPi.GPIO as GPIO
 import numpy as np
@@ -8,15 +10,18 @@ global Vr #Velocidad lineal rueda derecha
 global Vl #Velocidad lineal rueda izquierda
 global l #Distancia entre las ruedas
 global r #Radio de las ruedas
-global VelAngMax
-global VelLinMax
+global x  #Posicion en x
+global y #Posicion en y
+global theta #angulo
+
+x = 0
+y = 0
+theta = 0
 
 Vr = 0
 Vl = 0
 l = 10 #cm
 r = 2 #cm
-VelAngMax = 16.8 #rad/s
-VelLinMax = r*VelAngMax #cmd/s
 
 #Define nombre de las entradas del puente H
 ena = 18			
@@ -93,31 +98,42 @@ def getPos(x,y,theta,Vr,Vl):
 def callback_move(data): 
     velLin = data.linear.x
     velAng = data.angular.z
-    PWM_Lin = velLin*100/33
-    PWM_Ang = velAng*100/16
+    PWM_Lin = velLin*100/33 if velLin < 33 else 100
+    PWM_Ang = velAng*100/16 if velAng < 16 else 100
+    print(PWM_Lin)
+    print(PWM_Ang)
     if velLin < 0:
+        PWM_Lin = -1*PWM_Lin
         Giro_Favor_Motor_A()
         Giro_Favor_Motor_B() 
         pwm_a.ChangeDutyCycle(PWM_Lin)
         pwm_b.ChangeDutyCycle(PWM_Lin)
-    
+        pos = getPos(x, y, theta, -velLin, -velLin)
+        print(pos)
     elif velLin > 0:
         Giro_Contra_Motor_B()
         Giro_Contra_Motor_A()
         pwm_a.ChangeDutyCycle(PWM_Lin)
         pwm_b.ChangeDutyCycle(PWM_Lin)
+        pos = getPos(x, y, theta, velLin, velLin)
+        print(pos)
     
     elif velAng < 0:
+        PWM_Ang = -1*PWM_Ang
         Giro_Favor_Motor_B()
         Giro_Contra_Motor_A()
         pwm_a.ChangeDutyCycle(PWM_Ang)
         pwm_b.ChangeDutyCycle(PWM_Ang)
+        pos = getPos(x, y, theta, -velAng, velAng)
+        print(pos)
 
     elif velAng > 0:
         Giro_Contra_Motor_B()
         Giro_Favor_Motor_A()
         pwm_a.ChangeDutyCycle(PWM_Ang)
         pwm_b.ChangeDutyCycle(PWM_Ang)
+        pos = getPos(x, y, theta, velAng, -velAng)
+        print(pos)
     else:
         pwm_a.ChangeDutyCycle(0)
         pwm_b.ChangeDutyCycle(0)
@@ -126,7 +142,7 @@ def listener():
     rospy.init_node('robot_listener', anonymous=True)
     rospy.Subscriber('/robot_cmdVel', Twist, callback_move)
     pub_postion = rospy.Publisher('/robot_position', Twist, queue_size=10)
-    pub_orientation = rospy.Publisher('/robot_orientation', Twist, queue_size=10)
+    pub_orientation = rospy.Publisher('/robot_orientation', Float32, queue_size=10)
     rospy.spin()
     GPIO.cleanup()
 

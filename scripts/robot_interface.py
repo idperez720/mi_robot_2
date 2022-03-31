@@ -50,9 +50,9 @@ def animate(i, trackX, trackY):
 
 if __name__ == '__main__':
     # crea el nodo
-    rospy.init_node('turtle_bot_interface', anonymous=True)
-    rospy.Subscriber('/turtlebot_position', Twist, callback_pose)
-    rospy.Subscriber('/turtlebot_orientation', Float32, callback_orientation)
+    rospy.init_node('robot_interface', anonymous=True)
+    rospy.Subscriber('/robot_position', Twist, callback_pose)
+    rospy.Subscriber('/robot_orientation', Float32, callback_orientation)
     rospy.Rate(60)
     
     fig = plt.figure(figsize=(5,5))
