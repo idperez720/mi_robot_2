@@ -90,8 +90,6 @@ def getPos(x,y,theta,Vr,Vl):
         y.append( y[-1] + 0.5* (Vr+Vl) * np.sin(theta[-1]) * dt )
         theta.append( theta[-1] + (1/l) * (Vr-Vl) * dt ) 
         pos=[x[-1],y[-1],theta[-1]]
-        print(pos)
-
     return pos
 
 
