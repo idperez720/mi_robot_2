@@ -114,53 +114,58 @@ def callback_move(data):
         PWM_Lin = -1*PWM_Lin
         Giro_Favor_Motor_A()
         Giro_Favor_Motor_B() 
-        pwm_a.ChangeDutyCycle(PWM_Lin)
-        pwm_b.ChangeDutyCycle(PWM_Lin)
         getPos(x, y, theta, -velLin, -velLin)
         orientation = theta[-1]
         position.linear.x = x[-1]
         position.linear.y = y[-1]
         pub_orientation.publish(orientation)
         pub_position.publish(position)
+        pwm_a.ChangeDutyCycle(PWM_Lin)
+        pwm_b.ChangeDutyCycle(PWM_Lin)
+
     elif velLin > 0:
         Giro_Contra_Motor_B()
         Giro_Contra_Motor_A()
-        pwm_a.ChangeDutyCycle(PWM_Lin)
-        pwm_b.ChangeDutyCycle(PWM_Lin)
         getPos(x, y, theta, velLin, velLin)
         orientation = theta[-1]
         position.linear.x = x[-1]
         position.linear.y = y[-1]
         pub_orientation.publish(orientation)
         pub_position.publish(position)
+        pwm_a.ChangeDutyCycle(PWM_Lin)
+        pwm_b.ChangeDutyCycle(PWM_Lin)
+
     
     elif velAng < 0:
         PWM_Ang = -1*PWM_Ang
         Giro_Favor_Motor_B()
         Giro_Contra_Motor_A()
-        pwm_a.ChangeDutyCycle(PWM_Ang)
-        pwm_b.ChangeDutyCycle(PWM_Ang)
         getPos(x, y, theta, velAng, -velAng)
         orientation = theta[-1]
         position.linear.x = x[-1]
         position.linear.y = y[-1]
         pub_orientation.publish(orientation)
         pub_position.publish(position)
+        pwm_a.ChangeDutyCycle(PWM_Ang)
+        pwm_b.ChangeDutyCycle(PWM_Ang)
+
 
     elif velAng > 0:
         Giro_Contra_Motor_B()
         Giro_Favor_Motor_A()
-        pwm_a.ChangeDutyCycle(PWM_Ang)
-        pwm_b.ChangeDutyCycle(PWM_Ang)
         getPos(x, y, theta, velAng, -velAng)
         orientation = theta[-1]
         position.linear.x = x[-1]
         position.linear.y = y[-1]
         pub_orientation.publish(orientation)
         pub_position.publish(position)
+        pwm_a.ChangeDutyCycle(PWM_Ang)
+        pwm_b.ChangeDutyCycle(PWM_Ang)
+
     else:
         pwm_a.ChangeDutyCycle(0)
         pwm_b.ChangeDutyCycle(0)
+
 
 def listener():
     global pub_orientation
