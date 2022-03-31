@@ -9,6 +9,12 @@ import os
 global msg
 global velLin
 global velAng
+global VelAngMax
+global VelLinMax
+
+r = 3.4 #cm
+VelAngMax = 16.8 #rad/s
+VelLinMax = r*VelAngMax #cmd/s
 
 msg = Twist()
 velLin = 0
