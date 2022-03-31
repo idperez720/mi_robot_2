@@ -119,6 +119,7 @@ def callback_move(data):
         pwm_a.ChangeDutyCycle(PWM_Lin)
         pwm_b.ChangeDutyCycle(PWM_Lin)
         pos = getPos(x, y, theta, velLin, velLin)
+        x, y, theta = pos
         print(pos)
     
     elif velAng < 0:
@@ -128,6 +129,7 @@ def callback_move(data):
         pwm_a.ChangeDutyCycle(PWM_Ang)
         pwm_b.ChangeDutyCycle(PWM_Ang)
         pos = getPos(x, y, theta, -velAng, velAng)
+        x, y, theta = pos
         print(pos)
 
     elif velAng > 0:
@@ -136,6 +138,7 @@ def callback_move(data):
         pwm_a.ChangeDutyCycle(PWM_Ang)
         pwm_b.ChangeDutyCycle(PWM_Ang)
         pos = getPos(x, y, theta, velAng, -velAng)
+        x, y, theta = pos
         print(pos)
     else:
         pwm_a.ChangeDutyCycle(0)
