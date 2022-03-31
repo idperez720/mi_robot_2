@@ -126,7 +126,7 @@ def talker():
 
 
     pub = rospy.Publisher('/robot_cmdVel', Twist, queue_size=10)
-    rospy.init_node('talker', anonymous=True)
+    rospy.init_node('robot_teleop', anonymous=True)
     rate = rospy.Rate(10) #10Hz
     keyboard.hook(key_press)
     while not rospy.is_shutdown():
