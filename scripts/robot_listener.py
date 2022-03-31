@@ -113,7 +113,7 @@ def callback_move(data):
         x = pos[0]
         y = pos[1]
         theta = pos[2]
-        print(x,y,theta)
+        print("[", x,",",y,",",theta,"]")
     elif velLin > 0:
         Giro_Contra_Motor_B()
         Giro_Contra_Motor_A()
