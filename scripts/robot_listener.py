@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-from matplotlib.pyplot import get
 import rospy
 from std_msgs.msg import Float32
 from geometry_msgs.msg import Twist
