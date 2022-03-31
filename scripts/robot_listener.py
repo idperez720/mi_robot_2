@@ -90,6 +90,7 @@ def getPos(x,y,theta,Vr,Vl):
         y.append( y[-1] + 0.5* (Vr+Vl) * np.sin(theta[-1]) * dt )
         theta.append( theta[-1] + (1/l) * (Vr-Vl) * dt ) 
         pos=[x[-1],y[-1],theta[-1]]
+        print(pos)
 
     return pos
 
@@ -114,17 +115,13 @@ def callback_move(data):
         x = pos[0]
         y = pos[1]
         theta = pos[2]
-        print(pos)
+        print(x,y,theta)
     elif velLin > 0:
         Giro_Contra_Motor_B()
         Giro_Contra_Motor_A()
         pwm_a.ChangeDutyCycle(PWM_Lin)
         pwm_b.ChangeDutyCycle(PWM_Lin)
         pos = getPos(x, y, theta, velLin, velLin)
-        x = pos[0]
-        y = pos[1]
-        theta = pos[2]
-        print(pos)
     
     elif velAng < 0:
         PWM_Ang = -1*PWM_Ang
@@ -133,10 +130,6 @@ def callback_move(data):
         pwm_a.ChangeDutyCycle(PWM_Ang)
         pwm_b.ChangeDutyCycle(PWM_Ang)
         pos = getPos(x, y, theta, -velAng, velAng)
-        x = pos[0]
-        y = pos[1]
-        theta = pos[2]
-        print(pos)
 
     elif velAng > 0:
         Giro_Contra_Motor_B()
@@ -144,10 +137,6 @@ def callback_move(data):
         pwm_a.ChangeDutyCycle(PWM_Ang)
         pwm_b.ChangeDutyCycle(PWM_Ang)
         pos = getPos(x, y, theta, velAng, -velAng)
-        x = pos[0]
-        y = pos[1]
-        theta = pos[2]
-        print(pos)
     else:
         pwm_a.ChangeDutyCycle(0)
         pwm_b.ChangeDutyCycle(0)
