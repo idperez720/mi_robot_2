@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from glob import glob
 import rospy
 from std_msgs.msg import Float32
 from geometry_msgs.msg import Twist
@@ -94,6 +95,9 @@ def getPos(x,y,theta,Vr,Vl):
 
 
 def callback_move(data):
+    global x
+    global y
+    global theta
     velLin = data.linear.x
     velAng = data.angular.z
     PWM_Lin = velLin*100/33 if velLin < 33 else 100
