@@ -14,9 +14,9 @@ global x  #Posicion en x
 global y #Posicion en y
 global theta #angulo
 
-x = 0
-y = 0
-theta = 0
+x = [0]
+y = [0]
+theta = [0]
 
 Vr = 0
 Vl = 0
