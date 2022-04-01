@@ -9,6 +9,7 @@ import matplotlib as mpl
 import math
 import matplotlib.patches as patches
 import tkinter as Tk
+import tkinter.font as TkFont
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 trackX = [] 
@@ -50,23 +51,30 @@ if __name__ == '__main__':
     
     fig = plt.figure(figsize=(5,5))
     root = Tk.Tk()
+    root.geometry("500x700")
+    root.configure(background='white')
 
     canvas = FigureCanvasTkAgg(fig, master=root)
-    canvas.get_tk_widget().grid(column=0,row=1)
-    
+    canvas.get_tk_widget().place(x=0, rely=0.1)
+
     ax = fig.add_subplot(1, 1, 1)
     # Format plot
+    fontFamily = TkFont.Font(family="Arial", size=14, weight="bold", slant="italic")
+
+    label = Tk.Label(master=root, text="Ingrese el titulo para guardar \n la grafica", foreground='black', background='white', font=fontFamily)
+    label.place(x=75, y=25)
+
 
     title_input = Tk.Entry(master=root,
                             width=30,
-                            font='Arial 20')
-    title_input.place(x=150,y=50)
+                            font=fontFamily)
+    title_input.place(x=75,rely=0.1)
     save_btn = Tk.Button(master = root,
                         height=2,
-                        width=10,
+                        width=50,
                         command=save_plot,
                         text='Save')
-    save_btn.place(x=650, y=50)
+    save_btn.place(relx=0.1, y=600)
     
     # Set up plot to call animate() function periodically
     ani = animation.FuncAnimation(fig, animate, fargs=(trackX, trackY), interval=0)
