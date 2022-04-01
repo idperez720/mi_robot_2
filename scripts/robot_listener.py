@@ -1,11 +1,7 @@
 #!/usr/bin/env python3
 import rospy
-from std_msgs.msg import Float32
 from geometry_msgs.msg import Twist
 import RPi.GPIO as GPIO
-import numpy as np
-
-
 
 
 #Define nombre de las entradas del puente H
@@ -66,52 +62,23 @@ def Giro_Contra_Motor_B():
     GPIO.output(in4,False)
 
 
-def getPos(x,y,theta,Vr,Vl):
-    dt = 0.1
-    tiempo = 0.1
-
-    for i in np.arange(0,tiempo,dt):
-        x.append( x[-1] + 0.5* (Vr+Vl) * np.cos(theta[-1]) * dt )
-        y.append( y[-1] + 0.5* (Vr+Vl) * np.sin(theta[-1]) * dt )
-        theta.append( theta[-1] + (1/l) * (Vr-Vl) * dt ) 
-        [x[-1],y[-1],theta[-1]]
-    return [x[-1],y[-1],theta[-1]]
-
-
 def callback_move(data):
-    global x
-    global y
-    global theta
-    global position
-
     velLin = data.linear.x
     velAng = data.angular.z
 
-    PWM_Lin = velLin*100/33 if velLin < 33 else 100
+    PWM_Lin = velLin*100/56 if velLin < 33 else 100
     PWM_Ang = velAng*100/16 if velAng < 16 else 100
 
     if velLin < 0:
         PWM_Lin = -1*PWM_Lin
         Giro_Favor_Motor_A()
         Giro_Favor_Motor_B() 
-        getPos(x, y, theta, -velLin, -velLin)
-        orientation = theta[-1]
-        position.linear.x = x[-1]
-        position.linear.y = y[-1]
-        pub_orientation.publish(orientation)
-        pub_position.publish(position)
         pwm_a.ChangeDutyCycle(PWM_Lin)
         pwm_b.ChangeDutyCycle(PWM_Lin)
 
     elif velLin > 0:
         Giro_Contra_Motor_B()
         Giro_Contra_Motor_A()
-        getPos(x, y, theta, velLin, velLin)
-        orientation = theta[-1]
-        position.linear.x = x[-1]
-        position.linear.y = y[-1]
-        pub_orientation.publish(orientation)
-        pub_position.publish(position)
         pwm_a.ChangeDutyCycle(PWM_Lin)
         pwm_b.ChangeDutyCycle(PWM_Lin)
 
@@ -120,12 +87,6 @@ def callback_move(data):
         PWM_Ang = -1*PWM_Ang
         Giro_Favor_Motor_B()
         Giro_Contra_Motor_A()
-        getPos(x, y, theta, velAng, -velAng)
-        orientation = theta[-1]
-        position.linear.x = x[-1]
-        position.linear.y = y[-1]
-        pub_orientation.publish(orientation)
-        pub_position.publish(position)
         pwm_a.ChangeDutyCycle(PWM_Ang)
         pwm_b.ChangeDutyCycle(PWM_Ang)
 
@@ -133,12 +94,6 @@ def callback_move(data):
     elif velAng > 0:
         Giro_Contra_Motor_B()
         Giro_Favor_Motor_A()
-        getPos(x, y, theta, velAng, -velAng)
-        orientation = theta[-1]
-        position.linear.x = x[-1]
-        position.linear.y = y[-1]
-        pub_orientation.publish(orientation)
-        pub_position.publish(position)
         pwm_a.ChangeDutyCycle(PWM_Ang)
         pwm_b.ChangeDutyCycle(PWM_Ang)
 
@@ -152,8 +107,6 @@ def listener():
     global pub_position
     rospy.init_node('robot_listener', anonymous=True)
     rospy.Subscriber('/robot_cmdVel', Twist, callback_move)
-    pub_position = rospy.Publisher('/robot_position', Twist, queue_size=10)
-    pub_orientation = rospy.Publisher('/robot_orientation', Float32, queue_size=10)
     rospy.spin()
     GPIO.cleanup()
 
