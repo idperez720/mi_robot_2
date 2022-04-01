@@ -50,7 +50,7 @@ msg.angular.x = 0
 msg.angular.y = 0
 msg.angular.z = 0
 
-directory = os.path.dirname(__file__)
+directory = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
 
 ## Funciones
@@ -159,12 +159,11 @@ def talker():
     global pub_position
     velLin = int(input('Ingrese la velociadad lineal deseada: '+"[0-"+str(int(VelLinMax))+"](cm/s):"))
     velAng = int(input('Ingrese la velociadad angular deseada: '+"[0-"+str(int(VelAngMax))+"](rads/s):"))
-    
-
     ## Guardar recorido
     con=input('Desea guardar el recorrido? y/n \n')
     if(con=="y"):
         name = input('Ingrese nombre del archivo \n')
+
         path = os.path.join(directory, "results", "recorridos", name)
         f = open(path + ".txt","a")
         #recorridos.append(name1 + '.txt')

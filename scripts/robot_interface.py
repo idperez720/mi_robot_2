@@ -23,11 +23,9 @@ def callback_pose(data):
     trackX.append(turtle_pos_x)
     trackY.append(turtle_pos_y)
     pos_array = [turtle_pos_x, turtle_pos_y]
-    print('posicion: ', pos_array)
 
 def callback_orientation(data):
     angle.append(np.round(float(data.data), 2))
-    #print(angle)
 
 def save_plot():
     title = title_input.get()
