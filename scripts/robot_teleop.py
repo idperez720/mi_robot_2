@@ -88,7 +88,7 @@ def key_press(key):
                 pass          
         elif key.name == "s":
             msg.linear.x = -1*velLin
-            getPos(x, y, theta, velLin, velLin)
+            getPos(x, y, theta, -velLin, -velLin)
             move_str = "\n" + str(msg.linear.x) + "," + str(msg.linear.y) + "," + str(msg.linear.z) + "," + str(msg.angular.x) + "," + str(msg.angular.y) + "," + str(msg.angular.z)
             try:
                 f.write(move_str)  
