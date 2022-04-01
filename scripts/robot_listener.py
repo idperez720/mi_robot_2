@@ -5,28 +5,8 @@ from geometry_msgs.msg import Twist
 import RPi.GPIO as GPIO
 import numpy as np
 
-global Vr #Velocidad lineal rueda derecha
-global Vl #Velocidad lineal rueda izquierda
-global l #Distancia entre las ruedas
-global r #Radio de las ruedas
-global x  #Posicion en x
-global y #Posicion en y
-global theta #angulo
-global position
 
-position = Twist()
 
-position.linear.x = 0
-position.linear.y = 0
-
-x = [0]
-y = [0]
-theta = [0]
-
-Vr = 0
-Vl = 0
-l = 21 #cm
-r = 3.4 #cm
 
 #Define nombre de las entradas del puente H
 ena = 18			
