@@ -58,7 +58,7 @@ find_package(catkin REQUIRED COMPONENTS
 # add_service_files(
 #   FILES
 #   player.srv
-)
+#)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
